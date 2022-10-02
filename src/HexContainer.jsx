@@ -4,7 +4,6 @@ import {generateStr} from "./HexGenerator";
 import AnswerForm from "./HexInputs";
 
 class HexContainer extends Component {
-    // const [actionMode, setActionMode] = useState('')
     constructor(props) {
         super(props);
         this.state ={
@@ -15,6 +14,12 @@ class HexContainer extends Component {
         // this.flashInput()
     }
 
+    handleUnmountIn(numChange){
+        this.answer = generateStr(this.props.curLevel + numChange)
+        // this.setState({actionMode: 'view'})
+        this.flashInput()
+    }
+
     componentDidMount() {
         this.flashInput()
     }
@@ -23,9 +28,6 @@ class HexContainer extends Component {
         this.answer = generateStr(this.props.curLevel)
         this.flashInput()
     }
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     this.flashInput()
-    // }
 
     switchActionMode(mode) {
         this.setState({actionMode: mode})
@@ -38,16 +40,13 @@ class HexContainer extends Component {
 
     // flashInput()
     render() {
-        return <div className="container-wrapper">
+        return <div className="container-wrapper text-center">
         {this.state.actionMode === 'view'? <HexView hexStr={this.answer}/>
             : <AnswerForm answer={this.answer} updateLevel={this.props.updateLevel}
+                          unMount={this.handleUnmountIn.bind(this)}
             curLevel={this.props.curLevel} onFilled={this.sameLevel.bind(this)}/>}
-        {/*<AnswerForm answer={this.answer} updateLevel={this.props.updateLevel}*/}
-        {/*            curLevel={this.props.curLevel} />*/}
-    </div>
+        </div>
     }
-
-
 }
 
 export default HexContainer;

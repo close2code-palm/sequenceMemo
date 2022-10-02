@@ -1,5 +1,5 @@
 import {Component} from "react";
-import app from "./App";
+// import app from "./App";
 
 
 // needs to know answer from renderer
@@ -29,8 +29,7 @@ class HexInputs extends Component {
 
     render() {
         return (
-            <input key={this.props.rKey}
-                   type='text' value={this.state.value}
+            <input type='text' value={this.state.value}
             onChange={this.onChange.bind(this)} readOnly={this.state.filled}
             style={{background: this.state.color}}/>
         )
@@ -51,18 +50,22 @@ class AnswerForm extends Component {
 
         // let appBranch = document.querySelector('.app-container')
         // appBranch.parentNode.removeChild(appBranch)
-        this.props.updateLevel(this.props.curLevel)
-        // switch (this.state.numberFilled - this.state.rightAnswers){
-        //     case 0:
-        //         this.props.updateLevel(this.props.curLevel + 1)
-        //         break
-        //     case 1:
-        //     case 2:
-        //         this.props.onFilled()
-        //         break
-        //     default:
-        //         this.props.updateLevel(this.props.curLevel - 1)
-        // }
+        // this.props.updateLevel(this.props.curLevel)
+        let levelDelta = NaN
+        switch (this.state.numberFilled - this.state.rightAnswers){
+            case 0:
+                levelDelta = 1
+                break
+            case 1:
+            case 2:
+                levelDelta = 0
+                this.props.onFilled()
+                break
+            default:
+                levelDelta = -1
+        }
+        this.props.updateLevel(this.props.curLevel + levelDelta)
+        this.props.unMount(levelDelta)
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -92,10 +95,14 @@ class AnswerForm extends Component {
     }
 
     render() {
-        return <div className="inputs-wrapper">
-            {this.mapAnswers().map((sym, index) => (
-                <HexInputs rKey={index} answer={sym} onFilled = {this.oneEntered} />
+        return <div className="inputs-wrapper input-group-lg">
+            <p style={{display: 'flex', justifyContent: 'flex-end', fontSize: '1rem', fontStyle: 'italic',
+            paddingRight: '1rem'}}>
+            * Press Tab to move to the next input</p>
+            {this.mapAnswers().map((sym, key) => (
+                <HexInputs key={key} answer={sym} onFilled = {this.oneEntered} />
             ))}
+
         </div>
     }
 }

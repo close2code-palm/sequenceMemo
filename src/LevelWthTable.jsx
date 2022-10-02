@@ -1,16 +1,6 @@
-import {Component, useState} from "react";
+import {Component} from "react";
 import HexContainer from "./HexContainer";
-//
-// export default function InputLevel() {
-//     const [level, setLevel] = useState(4)
-//
-//     return (
-//         <div>
-//             <p>You current level is {level}</p>
-//             <HexContainer updateLevel = {setLevel} curLevel = {level} />
-//         </div>
-//     )
-// }
+
 
 class InputLevel extends Component {
     constructor(props) {
@@ -26,7 +16,7 @@ class InputLevel extends Component {
 
     render() {
         return (
-            <div className="app-container">
+            <div className="app-container text-center">
                 <p>You current level is {this.state.level}</p>
                 <HexContainer updateLevel = {this.setLevel.bind(this)} curLevel = {this.state.level} />
             </div>

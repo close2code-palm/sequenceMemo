@@ -1,8 +1,8 @@
 const HexView = props => {
     const symbols = props.hexStr.split('')
-    return(<div>
+    return(<div className="view-wrapper">
         {symbols.map((symbol, index) => (
-            <span key={index}>{symbol}</span>
+            <span className="m-4" key={index}>{symbol}</span>
           )
         )}
     </div>)
